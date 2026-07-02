@@ -1,17 +1,31 @@
-ة <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d2b12">
-<title>ماشین‌حساب خوراک دام - DAMDARANPLUS</title>
+<title>ماشیـن‌حساب خوراک دام - DAMDARANPLUS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#0d2b12;color:#1a2e1c;direction:rtl;min-height:100vh;}
-.login-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px 20px;background:#0d2b12;}
-.login-card{background:#fff;border-radius:24px;padding:32px 24px;width:100%;max-width:400px;box-shadow:0 16px 48px rgba(0,0,0,0.4);}
+
+/* خوشه گندم پس‌زمینه */
+body::before{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='200' viewBox='0 0 120 200'%3E%3Cg opacity='0.07'%3E%3Cellipse cx='60' cy='30' rx='6' ry='10' fill='%23FFD700' transform='rotate(-15 60 30)'/%3E%3Cellipse cx='75' cy='45' rx='6' ry='10' fill='%23FFD700' transform='rotate(10 75 45)'/%3E%3Cellipse cx='45' cy='45' rx='6' ry='10' fill='%23FFD700' transform='rotate(-25 45 45)'/%3E%3Cellipse cx='80' cy='65' rx='6' ry='10' fill='%23FFD700' transform='rotate(20 80 65)'/%3E%3Cellipse cx='40' cy='65' rx='6' ry='10' fill='%23FFD700' transform='rotate(-30 40 65)'/%3E%3Cellipse cx='60' cy='70' rx='6' ry='10' fill='%23FFD700' transform='rotate(0 60 70)'/%3E%3Cline x1='60' y1='30' x2='60' y2='180' stroke='%23FFD700' stroke-width='2'/%3E%3Cline x1='60' y1='80' x2='40' y2='120' stroke='%23FFD700' stroke-width='1.5'/%3E%3Cline x1='60' y1='80' x2='80' y2='120' stroke='%23FFD700' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:120px 200px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* LOGIN */
+.login-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px 20px;position:relative;z-index:1;}
+.login-card{background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-radius:24px;padding:32px 24px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 0 1px rgba(255,215,0,0.2);}
 .login-logo{text-align:center;margin-bottom:24px;}
 .login-logo .lt{font-size:26px;font-weight:800;color:#0d2b12;letter-spacing:1px;}
 .login-logo .lt span{color:#16a34a;}
@@ -26,19 +40,22 @@ body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#0d2b12;color:#1a2e1c;
 .btn-login{width:100%;padding:15px;background:linear-gradient(135deg,#1a5c2a,#2d7a3a);color:#fff;border:none;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;box-shadow:0 4px 16px rgba(29,92,42,0.35);}
 .login-sending{text-align:center;color:#7a9a7a;font-size:13px;margin-top:12px;display:none;}
 .login-note{font-size:11.5px;color:#aaa;text-align:center;margin-top:14px;line-height:1.7;}
-.app-page{display:none;}
-.header{background:#0a2210;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:100;}
+
+/* APP */
+.app-page{display:none;position:relative;z-index:1;}
+.header{background:rgba(10,34,16,0.95);backdrop-filter:blur(10px);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,215,0,0.15);position:sticky;top:0;z-index:100;}
 .logo-wrap{display:flex;flex-direction:column;align-items:flex-start;}
 .logo-text{font-size:22px;font-weight:800;letter-spacing:1px;color:#fff;line-height:1.1;}
 .logo-text span{color:#4ade80;}
 .logo-sub{font-size:11px;font-weight:300;color:rgba(255,255,255,0.5);margin-top:2px;}
-.header-icon{width:40px;height:40px;background:rgba(74,222,128,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.header-icon{width:40px;height:40px;background:rgba(255,215,0,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid rgba(255,215,0,0.2);}
 .welcome-bar{background:rgba(74,222,128,0.1);border-bottom:1px solid rgba(74,222,128,0.15);padding:10px 20px;font-size:13px;color:#4ade80;font-weight:500;}
-.hero{padding:24px 20px 16px;text-align:center;}
-.hero h1{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
-.hero p{font-size:13.5px;color:rgba(255,255,255,0.55);line-height:1.8;}
+.hero{padding:28px 20px 20px;text-align:center;}
+.hero h1{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.hero p{font-size:13.5px;color:rgba(255,255,255,0.6);line-height:1.8;}
+.hero-badge{display:inline-block;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:999px;padding:6px 16px;font-size:12px;color:#FFD700;font-weight:600;margin-bottom:12px;}
 .content{padding:0 16px 100px;}
-.card{background:#fff;border-radius:20px;padding:22px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);}
+.card{background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-radius:20px;padding:22px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25),0 0 0 1px rgba(255,215,0,0.1);}
 .card-title{font-size:15px;font-weight:700;color:#0d2b12;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
 .card-title .icon{width:32px;height:32px;background:#e8f5e9;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
 .field{margin-bottom:14px;}
@@ -50,7 +67,7 @@ body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#0d2b12;color:#1a2e1c;
 .select-wrap::after{content:'▾';position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#2d7a3a;pointer-events:none;font-size:14px;}
 .price-hint{font-size:12px;color:#e67e22;background:#fef9f0;border:1px solid #f0d9b5;border-radius:8px;padding:8px 12px;margin-top:-8px;margin-bottom:14px;line-height:1.6;}
 .btn-calc{width:100%;padding:15px;background:linear-gradient(135deg,#1a5c2a,#2d7a3a);color:#fff;border:none;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(29,92,42,0.35);}
-.result-card{display:none;background:#fff;border-radius:20px;padding:22px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);}
+.result-card{display:none;background:rgba(255,255,255,0.97);border-radius:20px;padding:22px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);}
 .result-card.show{display:block;}
 .result-header{text-align:center;margin-bottom:18px;padding-bottom:16px;border-bottom:1.5px solid #f0f7f0;}
 .result-header .animal-name{font-size:16px;font-weight:700;color:#1a5c2a;margin-bottom:4px;}
@@ -94,22 +111,24 @@ body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#0d2b12;color:#1a2e1c;
 .ingr-item .i-label{font-size:11px;color:#8a6a00;margin-bottom:4px;font-weight:500;}
 .ingr-item .i-value{font-size:16px;font-weight:800;color:#a07800;}
 .ingr-item .i-unit{font-size:11px;color:#9a8040;margin-top:2px;}
-.cost-box{background:linear-gradient(135deg,#b8860b,#d4a017);border-radius:16px;padding:16px;text-align:center;margin-bottom:14px;color:#fff;}
+.cost-box{background:linear-gradient(135deg,#b8860b,#d4a017);border-radius:16px;padding:18px;text-align:center;margin-bottom:14px;color:#fff;box-shadow:0 4px 16px rgba(184,134,11,0.3);}
 .cost-box .c-label{font-size:12px;opacity:0.85;margin-bottom:6px;}
-.cost-box .c-value{font-size:26px;font-weight:800;}
-.cost-box .c-unit{font-size:13px;opacity:0.85;margin-top:2px;}
+.cost-box .c-value{font-size:28px;font-weight:800;margin-bottom:2px;}
+.cost-box .c-unit{font-size:13px;opacity:0.9;margin-bottom:6px;}
+.cost-box .c-words{font-size:15px;font-weight:700;background:rgba(0,0,0,0.15);border-radius:8px;padding:6px 12px;display:inline-block;margin-top:4px;}
 .no-price-box{background:#fef9f0;border:1.5px dashed #f0a500;border-radius:14px;padding:14px;text-align:center;margin-bottom:14px;}
 .no-price-box p{font-size:13px;color:#a07800;line-height:1.7;}
 .no-price-box b{color:#e67e22;}
 .btn-share{width:100%;padding:13px;background:#f0f7f0;color:#1a5c2a;border:1.5px solid #c8e6c9;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
-.info-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.info-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:16px;padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
 .info-card .info-icon{font-size:28px;flex-shrink:0;}
-.info-card .info-text h3{font-size:14px;font-weight:700;color:#4ade80;margin-bottom:4px;}
-.info-card .info-text p{font-size:12.5px;color:rgba(255,255,255,0.55);line-height:1.7;}
-.support-card{background:#fff;border-radius:20px;padding:20px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);text-align:center;}
+.info-card .info-text h3{font-size:14px;font-weight:700;color:#FFD700;margin-bottom:4px;}
+.info-card .info-text p{font-size:12.5px;color:rgba(255,255,255,0.6);line-height:1.7;}
+.support-card{background:rgba(255,255,255,0.97);border-radius:20px;padding:20px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);text-align:center;}
 .support-card h3{font-size:15px;font-weight:700;color:#0d2b12;margin-bottom:6px;}
 .support-card p{font-size:13px;color:#7a9a7a;margin-bottom:14px;line-height:1.7;}
-.btn-support{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;font-weight:700;text-decoration:none;}
+.btn-support{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:10px;}
+.btn-call{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:linear-gradient(135deg,#1a5c2a,#2d7a3a);color:#fff;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 16px rgba(29,92,42,0.3);}
 .socials{display:flex;gap:8px;justify-content:center;margin-bottom:14px;}
 .social-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:12px;font-weight:500;font-family:'Vazirmatn',Tahoma,sans-serif;}
 footer{text-align:center;color:rgba(255,255,255,0.3);font-size:12px;padding:0 16px 30px;}
@@ -123,7 +142,7 @@ footer span{color:rgba(74,222,128,0.5);}
       <div class="lt">DAMDARAN<span>PLUS</span></div>
       <div class="ls">مرجع آموزش دامداری</div>
     </div>
-    <div class="login-title">خوش آمدی دامدار! 🐑</div>
+    <div class="login-title">خوش آمدید 🐑</div>
     <div class="login-sub">برای استفاده از ماشین‌حساب خوراک دام، اطلاعات زیر را وارد کنید</div>
     <div class="login-field">
       <label>نام</label>
@@ -147,15 +166,17 @@ footer span{color:rgba(74,222,128,0.5);}
   <div class="header">
     <div class="logo-wrap">
       <div class="logo-text">DAMDARAN<span>PLUS</span></div>
-      <div class="logo-sub">دامداران پلاس پیشرو درآموزش</div>
+      <div class="logo-sub">مرجع آموزش دامداری</div>
     </div>
-    <div class="header-icon">🐑</div>
+    <div class="header-icon">🌾</div>
   </div>
   <div class="welcome-bar" id="welcomeBar">👋 خوش آمدید!</div>
   <div class="hero">
+    <span class="hero-badge">🥇 اولین ابزار تخصصی محاسبه خوراک دام</span>
     <h1>ماشین‌حساب خوراک دام</h1>
-    <p>جیره روزانه، مصرف گله و هزینه ماهانه<br>همه در یک جابرای شما</p>
+    <p>جیره روزانه، مصرف گله و هزینه ماهانه<br>همه در یک جابرای شما </p>
   </div>
+
   <div class="content">
     <div class="card">
       <div class="card-title"><div class="icon">🧮</div>اطلاعات دام</div>
@@ -180,7 +201,7 @@ footer span{color:rgba(74,222,128,0.5);}
               <option value="lactating-peak">لاکن و اصل شیرده</option>
             </optgroup>
             <optgroup label="پرواری و سایر">
-              <option value="fattening">پرورار (گوسفند پرواری)</option>
+              <option value="fattening"> (بره پرواری)</option>
               <option value="lamb-milk">بره شیرخوار</option>
               <option value="ewe-lambs">شیشک‌های ماده</option>
             </optgroup>
@@ -196,15 +217,15 @@ footer span{color:rgba(74,222,128,0.5);}
         <input type="number" id="herdCount" placeholder="مثال: ۸۰" min="1">
       </div>
       <div class="field">
-        <label>قیمت خوراک (هزار تومان / کیلوگرم) — (اختیاری)</label>
-        <input type="number" id="feedPrice" placeholder="برای محاسبه هزینه وارد کنید">
+        <label>قیمت خوراک (هزار تومان / کیلوگرم) — اختیاری</label>
+        <input type="number" id="feedPrice" placeholder="مثال: ۵۵ — برای محاسبه هزینه وارد کنید">
       </div>
       <div class="price-hint" id="priceHint" style="display:none">
         💡 قیمت خوراک رو بنویس تا بهت بگم چقدر قراره هزینه کنی!
-       </div>
+      </div>
       <div class="field">
         <label>درصد جو از کنسانتره (%)</label>
-        <input type="number" id="barleyPct" value="40" min="0" max="100">
+        <input type="number" id="barleyPct" placeholder="مثال: ۸۶" min="0" max="100">
       </div>
       <button class="btn-calc" onclick="calculate()">
         <span>🐑</span> محاسبه کامل
@@ -256,9 +277,10 @@ footer span{color:rgba(74,222,128,0.5);}
           <div class="ingr-item"><div class="i-label">🌿 کاه موردنیاز ماهانه</div><div class="i-value" id="iStraw">—</div><div class="i-unit" id="iStrawUnit">—</div></div>
         </div>
         <div class="cost-box" id="costBox" style="display:none">
-          <div class="c-label">💰 هزینه خوراک ماهانه کل گله</div>
+          <div class="c-label">💰 هزینه خوراک ماهانه کل گله (تومان)</div>
           <div class="c-value" id="cValue">—</div>
           <div class="c-unit">میلیون تومان در ماه</div>
+          <div class="c-words" id="cWords">—</div>
         </div>
         <div class="no-price-box" id="noPriceBox" style="display:none">
           <p>💡 <b>قیمت خوراک رو بنویس</b> تا بهت بگم<br>چقدر قراره هزینه کنی!</p>
@@ -266,29 +288,33 @@ footer span{color:rgba(74,222,128,0.5);}
       </div>
       <button class="btn-share" onclick="share()">📤 اشتراک‌گذاری نتایج</button>
     </div>
-        <div class="info-card">
+
+    <div class="info-card">
       <div class="info-icon">⚡</div>
       <div class="info-text">
-        <h3>فرمول سینرژی</h3>
-      <p>نسل جدید جیره های پرواری ❌بدون یونجه، ❌بدون ذرت،وزن‌گیری بالای 
-۱۰ کیلو در ماه با هزینه ۵۰ تا ۵۵ هزار تومان برای کسب اصلاعات بیشتر باما در تماس باشید</p>
+        <h3>فرمول سینـرژی</h3>
+نسل جدید جیره های بصرفه
+        <p>جیره اقتصادی پرواری — بدون یونجه، بدون ذرت — وزن‌گیری بالای ۱۰ کیلو در ماه با هزینه ۵۰ تا ۵۵ هزار تومان</p>
       </div>
     </div>
+
     <div class="socials">
       <a href="https://instagram.com/damdaranplus" target="_blank" class="social-btn">📷 اینستاگرام</a>
       <a href="https://t.me/damdaranplus" target="_blank" class="social-btn">✈️ تلگرام</a>
       <a href="https://eitaa.com/damdaranplus" target="_blank" class="social-btn">💬 ایتا</a>
     </div>
+
     <div class="support-card">
       <h3>💬 پشتیبانی و مشاوره</h3>
       <p>برای مشاوره تخصصی جیره‌نویسی و سؤالات تغذیه دام با ما در ارتباط باشید</p>
       <a href="https://eitaa.com/damdaranplus" target="_blank" class="btn-support">💬 ورود به کانال ایتا</a>
+      <a href="tel:09198340686" class="btn-call">📞 تماس مستقیم: ۰۹۱۹۸۳۴۰۶۸۶</a>
     </div>
-  <footer>© ۱۴۰۴ <span>DAMDARANPLUS</span> —باافتخارقدرت گرفته ازدامداران پلاس سیدمحمدآقامیری
+  </div>
+  <footer>© ۱۴۰۴ <span>DAMDARANPLUS</span> — سید محمد آقامیری | متخصص تغذیه دام</footer>
 </div>
 <script>
-const W3F_KEY='c05ca1a2-cf59-44bf-8c61-8c89418e2a2b';
-const W3F_EMAIL='ma13772400@gmail.com';
+const SHEETDB='https://sheetdb.io/api/v1/n99kpahoxut7v';
 
 const animals={
   'sheep-idle':{name:'میش قصر (نگهداری)',conc:80,for:20,pct:3.5,note:'مقدار توصیه‌شده: ۱۶۰۰ تا ۱۷۰۰ گرم در روز'},
@@ -316,8 +342,38 @@ function fmtBig(kg){
 }
 
 function fmtHerd(kg){
-  if(kg>=1000){const t=kg/1000;return parseFloat(t.toFixed(2))+' تن';}
+  if(kg>=1000){return parseFloat((kg/1000).toFixed(2))+' تن';}
   return Math.round(kg)+' کیلوگرم';
+}
+
+// تبدیل عدد به حروف فارسی
+function numToWords(n){
+  const ones=['','یک','دو','سه','چهار','پنج','شش','هفت','هشت','نه','ده','یازده','دوازده','سیزده','چهارده','پانزده','شانزده','هفده','هجده','نوزده'];
+  const tens=['','','بیست','سی','چهل','پنجاه','شصت','هفتاد','هشتاد','نود'];
+  const scales=['','هزار','میلیون','میلیارد'];
+
+  if(n===0)return'صفر';
+  if(n<0)return'منفی '+numToWords(-n);
+
+  function h(n){
+    if(n===0)return'';
+    if(n<20)return ones[n];
+    if(n<100)return tens[Math.floor(n/10)]+(n%10?' و '+ones[n%10]:'');
+    return ones[Math.floor(n/100)]+' صد'+(n%100?' و '+h(n%100):'');
+  }
+
+  let result='';
+  let scaleIdx=0;
+  while(n>0){
+    const chunk=n%1000;
+    if(chunk!==0){
+      const chunkStr=h(chunk);
+      result=chunkStr+(scaleIdx>0?' '+scales[scaleIdx]:'')+(result?' و '+result:'');
+    }
+    n=Math.floor(n/1000);
+    scaleIdx++;
+  }
+  return result+' تومان';
 }
 
 let last=null;
@@ -337,21 +393,19 @@ async function doLogin(){
   const timeStr=now.toLocaleTimeString('fa-IR');
 
   try{
-    await fetch('https://api.web3forms.com/submit',{
+    await fetch(SHEETDB,{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
-        access_key:W3F_KEY,
-        subject:'🐑 کاربر جدید ماشین‌حساب دامداران‌پلاس',
-        from_name:'DAMDARANPLUS',
-        name:fn+' '+ln,
-        phone:ph,
-        date:dateStr,
-        time:timeStr,
-        message:'نام: '+fn+' '+ln+'\nشماره: '+ph+'\nتاریخ: '+dateStr+' — '+timeStr
+        data:[{
+          'نام':fn,
+          'نام خانوادگی':ln,
+          'شماره':ph,
+          'تاریخ':dateStr+' — '+timeStr
+        }]
       })
     });
-  }catch(e){}
+  }catch(e){console.log('SheetDB error:',e);}
 
   localStorage.setItem('dp_user',JSON.stringify({fn,ln,ph}));
   document.getElementById('loginSending').style.display='none';
@@ -361,7 +415,7 @@ async function doLogin(){
 function showApp(name){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('appPage').style.display='block';
-  document.getElementById('welcomeBar').textContent='👋 خوش آمدید، '+name+'!';
+  document.getElementById('welcomeBar').textContent='👋 خوش آمدی، '+name+'!';
 }
 
 window.onload=function(){
@@ -428,8 +482,11 @@ function calculate(){
     document.getElementById('iStrawUnit').textContent=is2.unit;
 
     if(price){
-      const costM=(monthlyKg*price)/1000;
-      document.getElementById('cValue').textContent=costM.toFixed(1);
+      const costM=(monthlyKg*price);
+      const costToman=Math.round(costM*1000);
+      const costMil=costM.toFixed(1);
+      document.getElementById('cValue').textContent=costMil;
+      document.getElementById('cWords').textContent=numToWords(costToman);
       document.getElementById('costBox').style.display='block';
       document.getElementById('noPriceBox').style.display='none';
     }else{
@@ -455,7 +512,7 @@ function share(){
   let text='🐑 محاسبه خوراک — DAMDARANPLUS\n\nنوع دام: '+d.name+'\nوزن: '+w+' کیلوگرم\n\n📊 مصرف هر رأس:\nکل: '+total.val+' '+total.unit+'\nکنسانتره ('+d.conc+'٪): '+conc.val+' '+conc.unit+'\nعلوفه ('+d.for+'٪): '+forF.val+' '+forF.unit;
   if(count>0){
     text+='\n\n🐑 گله ('+count+' رأس):\nروزانه: '+fmtHerd(dailyKg)+'\nماهانه: '+fmtHerd(monthlyKg)+'\n🌾 جو: '+fmtHerd(barleyKg)+'\n🌿 کاه: '+fmtHerd(monthlyForKg);
-    if(price){const c=(monthlyKg*price)/1000;text+='\n💰 هزینه ماهانه: '+c.toFixed(1)+' میلیون تومان';}
+    if(price){const c=monthlyKg*price;text+='\n💰 هزینه ماهانه: '+c.toFixed(1)+' میلیون تومان\n'+numToWords(Math.round(c*1000));}
   }
   text+='\n\n📝 '+d.note+'\n\n📱 @damdaranplus';
   if(navigator.share){navigator.share({text});}

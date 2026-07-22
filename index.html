@@ -3,599 +3,1132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0d2b12">
-<title>ماشین‌حساب خوراک دام - DAMDARANPLUS</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>دوره پـرواربندی پیـشـرفتـه - DAMDARANPLUS</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+:root{
+  --green:#1a5c2a;
+  --green-dark:#0a2210;
+  --green-light:#e8f5e9;
+  --green-mid:#2d7a3a;
+  --yellow:#FFD700;
+  --yellow-soft:rgba(255,215,0,0.15);
+  --white:#ffffff;
+  --bg:#f0f7f1;
+  --text:#1a2e1c;
+  --muted:#6b8f6e;
+  --border:#d4e8d4;
+  --card:#ffffff;
+  --shadow:0 2px 12px rgba(26,92,42,0.08);
+  --radius:16px;
+  --radius-sm:10px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#0d2b12;color:#1a2e1c;direction:rtl;min-height:100vh;position:relative;overflow-x:hidden;}
-
-body::before{
-  content:'';
-  position:fixed;
-  top:0;left:0;right:0;bottom:0;
-  background-image:
-    radial-gradient(ellipse 4px 7px at 10% 15%,rgba(255,215,0,0.15) 0%,transparent 100%),
-    radial-gradient(ellipse 6px 6px at 25% 8%,rgba(255,165,0,0.12) 0%,transparent 100%),
-    radial-gradient(ellipse 4px 7px at 40% 20%,rgba(255,215,0,0.15) 0%,transparent 100%),
-    radial-gradient(ellipse 5px 5px at 60% 5%,rgba(255,165,0,0.12) 0%,transparent 100%),
-    radial-gradient(ellipse 4px 7px at 75% 12%,rgba(255,215,0,0.15) 0%,transparent 100%),
-    radial-gradient(ellipse 6px 6px at 90% 18%,rgba(255,165,0,0.12) 0%,transparent 100%),
-    radial-gradient(ellipse 4px 7px at 5% 35%,rgba(255,215,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 5px 5px at 85% 40%,rgba(255,165,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 4px 7px at 15% 60%,rgba(255,215,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 6px 6px at 95% 55%,rgba(255,165,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 4px 7px at 30% 75%,rgba(255,215,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 5px 5px at 70% 80%,rgba(255,165,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 4px 7px at 50% 90%,rgba(255,215,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 6px 6px at 8% 85%,rgba(255,165,0,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 4px 7px at 92% 88%,rgba(255,215,0,0.1) 0%,transparent 100%);
-  pointer-events:none;
-  z-index:0;
-}
-
-/* چشمک زن برق */
-@keyframes blink{
-  0%,100%{opacity:1;text-shadow:0 0 8px #FFD700;}
-  50%{opacity:0.3;text-shadow:none;}
-}
-.blink{animation:blink 1.2s infinite;}
-
-/* منوی درخواست جیره */
-.request-menu{
-  position:absolute;
-  top:70px;
-  left:10px;
-  background:#fff;
-  border-radius:14px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.3);
-  padding:12px;
-  z-index:200;
-  display:none;
-  min-width:200px;
-}
-.request-menu.show{display:block;}
-.request-menu h4{font-size:13px;color:#0d2b12;font-weight:700;margin-bottom:10px;text-align:center;}
-.request-btn{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  width:100%;
-  padding:10px 14px;
-  border-radius:10px;
-  text-decoration:none;
+body{
   font-family:'Vazirmatn',Tahoma,sans-serif;
-  font-size:13px;
-  font-weight:600;
+  background:var(--bg);
+  color:var(--text);
+  direction:rtl;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== DRAWER MENU ===== */
+.overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.5);
+  z-index:998;
+  display:none;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.overlay.show{display:block;opacity:1;}
+.drawer{
+  position:fixed;top:0;right:-320px;bottom:0;
+  width:300px;
+  background:#fff;
+  z-index:999;
+  transition:right 0.3s ease;
+  overflow-y:auto;
+  box-shadow:-4px 0 20px rgba(0,0,0,0.15);
+}
+.drawer.open{right:0;}
+.drawer-header{
+  background:var(--green-dark);
+  padding:20px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.drawer-logo{font-size:16px;font-weight:800;color:#fff;}
+.drawer-logo span{color:var(--yellow);}
+.drawer-close{
+  background:rgba(255,255,255,0.1);border:none;
+  color:#fff;font-size:20px;cursor:pointer;
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+}
+.drawer-body{padding:16px;}
+.drawer-item{
+  padding:14px 12px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;font-weight:600;color:var(--text);
+  margin-bottom:4px;
+  transition:background 0.2s;
+}
+.drawer-item:hover{background:var(--green-light);}
+.drawer-item .di-icon{
+  width:36px;height:36px;
+  background:var(--green-light);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.drawer-divider{height:1px;background:var(--border);margin:10px 0;}
+
+/* DRAWER PANELS */
+.drawer-panel{display:none;padding:4px 0;}
+.drawer-panel.active{display:block;}
+.drawer-panel-title{
+  font-size:16px;font-weight:800;
+  color:var(--green-dark);margin-bottom:12px;
+}
+.drawer-panel-text{
+  font-size:13px;color:#444;
+  line-height:1.9;
+}
+.drawer-back{
+  display:flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:600;color:var(--green);
+  cursor:pointer;margin-bottom:14px;
+  padding:8px 0;
+}
+
+/* فرم مشاوره */
+.consult-form .cf-field{margin-bottom:12px;}
+.consult-form label{
+  display:block;font-size:12px;font-weight:600;
+  color:var(--green);margin-bottom:5px;
+}
+.consult-form input,
+.consult-form select,
+.consult-form textarea{
+  width:100%;padding:10px 12px;
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:13px;color:var(--text);
+  background:#f8fdf8;outline:none;direction:rtl;
+}
+.consult-form input:focus,
+.consult-form select:focus{border-color:var(--green);}
+.btn-wa-send{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;border:none;border-radius:var(--radius-sm);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;
+  margin-top:4px;
+}
+.btn-eitaa-send{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;
+  background:linear-gradient(135deg,#2d5986,#3b6fa0);
+  color:#fff;border:none;border-radius:var(--radius-sm);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;
+  margin-top:8px;
+}
+
+/* فرم سود */
+.profit-title{
+  font-size:22px;font-weight:900;
+  color:var(--green);text-align:center;
   margin-bottom:8px;
 }
-.request-btn:last-child{margin-bottom:0;}
-.request-btn.eitaa{background:#e8f5e9;color:#1a5c2a;}
-.request-btn.whatsapp{background:#e3f2fd;color:#1565c0;}
-
-/* LOGIN */
-.login-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px 20px;position:relative;z-index:1;}
-.login-badge{background:rgba(255,215,0,0.2);border:1px solid rgba(255,215,0,0.4);border-radius:999px;padding:6px 18px;font-size:12px;color:#FFD700;font-weight:700;text-align:center;margin-bottom:16px;}
-.login-card{background:rgba(255,255,255,0.97);border-radius:24px;padding:32px 24px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 0 1px rgba(255,215,0,0.2);}
-.login-logo{text-align:center;margin-bottom:24px;}
-.login-logo .lt{font-size:26px;font-weight:800;color:#0d2b12;letter-spacing:1px;}
-.login-logo .lt span{color:#16a34a;}
-.login-logo .ls{font-size:12px;font-weight:300;color:#7a9a7a;margin-top:4px;}
-.login-title{font-size:16px;font-weight:700;color:#0d2b12;margin-bottom:6px;text-align:center;}
-.login-sub{font-size:13px;color:#7a9a7a;margin-bottom:24px;text-align:center;line-height:1.7;}
-.login-field{margin-bottom:14px;}
-.login-field label{display:block;font-size:13px;font-weight:600;color:#2d5016;margin-bottom:7px;}
-.login-field input{width:100%;padding:13px 14px;border:1.5px solid #e0ede0;border-radius:12px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;color:#1a2e1c;background:#f8fdf8;outline:none;direction:rtl;}
-.login-field input:focus{border-color:#16a34a;background:#fff;}
-.login-field input::placeholder{color:#adc5ad;}
-.btn-login{width:100%;padding:15px;background:linear-gradient(135deg,#1a5c2a,#2d7a3a);color:#fff;border:none;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;box-shadow:0 4px 16px rgba(29,92,42,0.35);}
-.login-sending{text-align:center;color:#7a9a7a;font-size:13px;margin-top:12px;display:none;}
-.login-note{font-size:11.5px;color:#aaa;text-align:center;margin-top:14px;line-height:1.7;}
-
-/* APP */
-.app-page{display:none;position:relative;z-index:1;}
-.header{background:rgba(10,34,16,0.97);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,215,0,0.15);position:sticky;top:0;z-index:100;}
-.logo-wrap{display:flex;flex-direction:column;align-items:flex-start;}
-.logo-text{font-size:20px;font-weight:800;letter-spacing:1px;color:#fff;line-height:1.1;}
-.logo-text span{color:#4ade80;}
-.logo-sub{font-size:11px;font-weight:300;color:rgba(255,255,255,0.5);margin-top:2px;}
-.header-left{display:flex;align-items:center;gap:8px;position:relative;}
-.request-trigger{
-  background:rgba(255,215,0,0.15);
-  border:1px solid rgba(255,215,0,0.3);
-  border-radius:10px;
-  padding:6px 10px;
-  display:flex;
-  align-items:center;
-  gap:5px;
-  cursor:pointer;
-  color:#FFD700;
-  font-family:'Vazirmatn',Tahoma,sans-serif;
-  font-size:11px;
-  font-weight:600;
+.profit-sub{
+  font-size:13px;color:#444;
+  line-height:1.9;margin-bottom:16px;
 }
-.btn-logout{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);border-radius:8px;padding:6px 10px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:11px;cursor:pointer;}
-.welcome-bar{background:rgba(74,222,128,0.1);border-bottom:1px solid rgba(74,222,128,0.15);padding:10px 20px;font-size:13px;color:#4ade80;font-weight:500;}
-.hero{padding:24px 20px 16px;text-align:center;}
-.hero-badge{display:inline-block;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:999px;padding:6px 16px;font-size:12px;color:#FFD700;font-weight:600;margin-bottom:12px;}
-.hero h1{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;}
-.hero p{font-size:13.5px;color:rgba(255,255,255,0.6);line-height:1.8;}
-.content{padding:0 16px 100px;}
-.card{background:rgba(255,255,255,0.97);border-radius:20px;padding:22px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);}
-.card-title{font-size:15px;font-weight:700;color:#0d2b12;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.card-title .icon{width:32px;height:32px;background:#e8f5e9;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.field{margin-bottom:14px;}
-.field label{display:block;font-size:13px;font-weight:600;color:#2d5016;margin-bottom:7px;}
-.field select,.field input{width:100%;padding:13px 14px;border:1.5px solid #e0ede0;border-radius:12px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;color:#1a2e1c;background:#f8fdf8;outline:none;transition:border-color 0.2s;direction:rtl;appearance:none;-webkit-appearance:none;}
-.field select:focus,.field input:focus{border-color:#2d7a3a;background:#fff;}
-.field input::placeholder{color:#adc5ad;}
-.select-wrap{position:relative;}
-.select-wrap::after{content:'▾';position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#2d7a3a;pointer-events:none;font-size:14px;}
-.price-hint{font-size:12px;color:#e67e22;background:#fef9f0;border:1px solid #f0d9b5;border-radius:8px;padding:8px 12px;margin-top:-8px;margin-bottom:14px;line-height:1.6;}
-.btn-calc{width:100%;padding:15px;background:linear-gradient(135deg,#1a5c2a,#2d7a3a);color:#fff;border:none;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(29,92,42,0.35);}
-.result-card{display:none;background:rgba(255,255,255,0.97);border-radius:20px;padding:22px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);}
-.result-card.show{display:block;}
-.result-header{text-align:center;margin-bottom:18px;padding-bottom:16px;border-bottom:1.5px solid #f0f7f0;}
-.result-header .animal-name{font-size:16px;font-weight:700;color:#1a5c2a;margin-bottom:4px;}
-.result-header .animal-weight{font-size:13px;color:#7a9a7a;}
-.total-box{background:linear-gradient(135deg,#1a5c2a,#2d7a3a);border-radius:16px;padding:18px;text-align:center;margin-bottom:14px;color:#fff;}
-.total-box .label{font-size:12px;opacity:0.8;margin-bottom:6px;}
-.total-box .value{font-size:32px;font-weight:800;line-height:1.1;}
-.total-box .unit{font-size:14px;opacity:0.85;margin-top:2px;}
-.split-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.split-item{border-radius:14px;padding:14px 12px;text-align:center;}
-.split-item.concentrate{background:#e8f5e9;}
-.split-item.forage{background:#fff8e1;}
-.split-item .s-label{font-size:11.5px;color:#5a7a5a;margin-bottom:6px;font-weight:500;}
-.split-item.forage .s-label{color:#8a6a00;}
-.split-item .s-value{font-size:22px;font-weight:800;color:#1a5c2a;line-height:1.1;}
-.split-item.forage .s-value{color:#a07800;}
-.split-item .s-unit{font-size:12px;color:#7a9a7a;margin-top:2px;}
-.split-item.forage .s-unit{color:#9a8040;}
-.split-item .s-pct{display:inline-block;background:rgba(29,92,42,0.12);color:#1a5c2a;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;margin-top:4px;}
-.split-item.forage .s-pct{background:rgba(160,120,0,0.12);color:#a07800;}
-.note-box{background:#f0f7f0;border-radius:12px;padding:12px 14px;font-size:13px;color:#2d5016;line-height:1.7;margin-bottom:12px;}
-.note-box b{color:#1a5c2a;}
-.divider{height:1.5px;background:#f0f7f0;margin:16px 0;}
-.section-title{font-size:14px;font-weight:700;color:#1a5c2a;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
-.herd-box{background:linear-gradient(135deg,#0d2b12,#1a5c2a);border-radius:16px;padding:18px;margin-bottom:14px;color:#fff;}
-.herd-box .herd-title{font-size:14px;font-weight:700;color:#4ade80;margin-bottom:14px;text-align:center;}
-.herd-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1);}
-.herd-row:last-child{border-bottom:none;padding-bottom:0;}
-.herd-row .hr-label{font-size:13px;color:rgba(255,255,255,0.7);}
-.herd-row .hr-value{font-size:15px;font-weight:700;color:#fff;}
-.herd-row .hr-value.green{color:#4ade80;}
-.herd-row .hr-value.yellow{color:#fbbf24;}
-.month-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.month-item{background:#f0f7f0;border-radius:14px;padding:14px 12px;text-align:center;}
-.month-item.dark{background:#e8f5e9;}
-.month-item .m-label{font-size:11px;color:#5a7a5a;margin-bottom:6px;font-weight:500;}
-.month-item .m-value{font-size:18px;font-weight:800;color:#1a5c2a;line-height:1.2;}
-.month-item .m-unit{font-size:11.5px;color:#7a9a7a;margin-top:2px;}
-.ingr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
-.ingr-item{background:#fff8e1;border-radius:12px;padding:12px 10px;text-align:center;}
-.ingr-item .i-label{font-size:11px;color:#8a6a00;margin-bottom:4px;font-weight:500;}
-.ingr-item .i-value{font-size:16px;font-weight:800;color:#a07800;}
-.ingr-item .i-unit{font-size:11px;color:#9a8040;margin-top:2px;}
-.cost-box{background:linear-gradient(135deg,#b8860b,#d4a017);border-radius:16px;padding:18px;text-align:center;margin-bottom:14px;color:#fff;}
-.cost-box .c-label{font-size:12px;opacity:0.85;margin-bottom:6px;}
-.cost-box .c-value{font-size:28px;font-weight:800;margin-bottom:2px;}
-.cost-box .c-unit{font-size:13px;opacity:0.9;margin-bottom:8px;}
-.cost-box .c-words{font-size:14px;font-weight:700;background:rgba(0,0,0,0.15);border-radius:8px;padding:8px 14px;display:inline-block;}
-.no-price-box{background:#fef9f0;border:1.5px dashed #f0a500;border-radius:14px;padding:14px;text-align:center;margin-bottom:14px;}
-.no-price-box p{font-size:13px;color:#a07800;line-height:1.7;}
-.no-price-box b{color:#e67e22;}
-.btn-share{width:100%;padding:13px;background:#f0f7f0;color:#1a5c2a;border:1.5px solid #c8e6c9;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
-.info-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:16px;padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
-.info-card .info-icon{font-size:28px;flex-shrink:0;}
-.info-card .info-text h3{font-size:14px;font-weight:700;color:#FFD700;margin-bottom:2px;}
-.info-card .info-text .info-sub{font-size:11.5px;color:#4ade80;margin-bottom:4px;font-weight:500;}
-.info-card .info-text p{font-size:12.5px;color:rgba(255,255,255,0.6);line-height:1.7;}
-.support-card{background:rgba(255,255,255,0.97);border-radius:20px;padding:20px 18px;margin-bottom:14px;box-shadow:0 8px 32px rgba(0,0,0,0.25);text-align:center;}
-.support-card h3{font-size:15px;font-weight:700;color:#0d2b12;margin-bottom:6px;}
-.support-card p{font-size:13px;color:#7a9a7a;margin-bottom:14px;line-height:1.7;}
-.btn-support{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:10px;}
-.btn-call{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:linear-gradient(135deg,#1a5c2a,#2d7a3a);color:#fff;border-radius:14px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:14px;font-weight:700;text-decoration:none;}
-.socials{display:flex;gap:8px;justify-content:center;margin-bottom:14px;}
-.social-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:12px;font-weight:500;font-family:'Vazirmatn',Tahoma,sans-serif;}
-footer{text-align:center;color:rgba(255,255,255,0.3);font-size:12px;padding:0 16px 30px;}
-footer span{color:rgba(74,222,128,0.5);}
+
+/* ===== AUTH PAGES ===== */
+.auth-page{
+  display:none;
+  min-height:100vh;
+  background:linear-gradient(160deg,var(--green-dark),var(--green));
+  align-items:center;justify-content:center;
+  padding:24px 20px;flex-direction:column;
+}
+.auth-page.active{display:flex;}
+.auth-card{
+  background:#fff;border-radius:20px;
+  padding:28px 22px;width:100%;max-width:400px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+}
+.auth-logo{text-align:center;margin-bottom:20px;}
+.auth-logo-text{font-size:22px;font-weight:900;color:var(--green-dark);}
+.auth-logo-text span{color:var(--green);}
+.auth-logo-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.auth-title{font-size:15px;font-weight:700;color:var(--green-dark);text-align:center;margin-bottom:4px;}
+.auth-sub{font-size:12px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.7;}
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--green);margin-bottom:5px;}
+.field input,.field select{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:14px;color:var(--text);background:#f8fdf8;outline:none;direction:rtl;
+}
+.field input[type=password]{direction:ltr;text-align:right;}
+.field input:focus{border-color:var(--green);background:#fff;}
+.field input::placeholder{color:#b0c8b0;}
+.pass-note{
+  font-size:11px;color:#e67e22;
+  background:#fef9f0;border:1px solid #f0d9b5;
+  border-radius:8px;padding:8px 10px;margin-top:6px;line-height:1.6;
+}
+.warn-note{
+  font-size:11px;color:#c0392b;
+  text-align:center;margin-top:12px;font-weight:600;line-height:1.7;
+}
+.btn-auth{
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,var(--green),var(--green-mid));
+  color:#fff;border:none;border-radius:var(--radius-sm);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;
+  box-shadow:0 4px 12px rgba(26,92,42,0.3);
+}
+.auth-switch{text-align:center;margin-top:14px;font-size:12px;color:var(--muted);}
+.auth-switch button{
+  background:none;border:none;color:var(--green);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:12px;font-weight:700;cursor:pointer;
+}
+
+/* فراموشی رمز */
+.forgot-link{
+  text-align:center;margin-top:10px;
+  font-size:12px;color:var(--muted);
+}
+.forgot-link button{
+  background:none;border:none;color:var(--green);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:12px;font-weight:600;cursor:pointer;
+}
+
+/* ===== APP PAGE ===== */
+.app-page{display:none;}
+.app-page.active{display:block;}
+
+/* HEADER */
+.header{
+  background:var(--green-dark);
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.hamburger{
+  background:rgba(255,255,255,0.1);border:none;
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-direction:column;gap:4px;
+}
+.hamburger span{
+  display:block;width:18px;height:2px;
+  background:#fff;border-radius:2px;
+}
+.header-logo{
+  display:flex;flex-direction:column;align-items:center;
+}
+.header-logo-text{font-size:17px;font-weight:900;color:#fff;letter-spacing:1px;}
+.header-logo-text span{color:var(--yellow);}
+.header-logo-sub{font-size:9px;color:rgba(255,255,255,0.45);margin-top:1px;}
+.btn-support-h{
+  display:flex;align-items:center;gap:5px;
+  background:var(--yellow-soft);
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:10px;padding:7px 10px;
+  color:var(--yellow);font-size:11px;font-weight:600;
+  cursor:pointer;font-family:'Vazirmatn',Tahoma,sans-serif;
+}
+
+/* WELCOME BAR */
+.welcome-bar{
+  background:rgba(26,92,42,0.08);
+  border-bottom:1px solid var(--border);
+  padding:10px 20px;
+  font-size:13px;color:var(--green);font-weight:600;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(145deg,var(--green-dark),var(--green));
+  padding:24px 20px 30px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:-30px;left:0;right:0;height:60px;
+  background:var(--bg);
+  border-radius:50% 50% 0 0;
+}
+.hero-badge{
+  display:inline-block;
+  background:var(--yellow-soft);
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:999px;padding:5px 14px;
+  font-size:11px;color:var(--yellow);font-weight:600;
+  margin-bottom:12px;
+}
+.hero h1{
+  font-size:26px;font-weight:900;
+  color:#fff;margin-bottom:6px;
+  line-height:1.3;letter-spacing:-0.5px;
+}
+.hero h1 span{color:var(--yellow);}
+.hero-sub{
+  font-size:12px;color:rgba(255,255,255,0.65);
+  margin-bottom:22px;line-height:1.7;
+}
+
+/* STATS BUBBLES */
+.stats-row{
+  display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+}
+.stat-bubble{
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:999px;
+  padding:8px 16px;
+  text-align:center;
+  display:flex;align-items:center;gap:8px;
+}
+.stat-num{font-size:16px;font-weight:900;color:var(--yellow);}
+.stat-label{font-size:10px;color:rgba(255,255,255,0.65);}
+
+/* PROGRESS */
+.progress-wrap{
+  margin:30px 16px 0;
+}
+.progress-card{
+  background:#fff;border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+.progress-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.progress-title{font-size:13px;font-weight:700;color:var(--text);}
+.progress-pct{
+  font-size:18px;font-weight:900;color:var(--green);
+}
+.progress-bar{
+  height:8px;background:var(--green-light);
+  border-radius:999px;overflow:hidden;margin-bottom:6px;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--green),var(--yellow));
+  border-radius:999px;
+  transition:width 0.6s ease;
+  width:0%;
+}
+.progress-text{font-size:11px;color:var(--muted);}
+
+/* CONTENT */
+.content{padding:16px 16px 100px;}
+
+/* SECTION */
+.section-head{
+  display:flex;align-items:center;gap:10px;
+  margin:22px 0 14px;
+}
+.section-badge{
+  display:flex;align-items:center;gap:6px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:12px;font-weight:700;color:var(--text);
+  white-space:nowrap;
+  box-shadow:var(--shadow);
+}
+.section-line{height:1px;flex:1;background:var(--border);}
+
+/* VIDEO CARDS */
+.video-grid{display:flex;flex-direction:column;gap:10px;}
+.video-card{
+  background:#fff;border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  overflow:hidden;
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.video-card.watched{border-color:var(--green);border-width:1.5px;}
+.video-card:active{transform:scale(0.99);}
+
+.card-inner{
+  display:flex;align-items:center;gap:12px;
+  padding:14px;
+}
+.card-num{
+  width:32px;height:32px;flex-shrink:0;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.card-num.green-n{background:var(--green-light);color:var(--green);}
+.card-num.blue-n{background:#e3f2fd;color:#1565c0;}
+.card-num.purple-n{background:#f3e5f5;color:#7b1fa2;}
+.card-num.watched-n{background:var(--green);color:#fff;}
+
+.card-info{flex:1;}
+.card-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.4;}
+.card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.card-time{font-size:11px;color:var(--muted);}
+
+/* TYPE BADGES - بیضی شفاف */
+.type-badge{
+  font-size:10px;font-weight:600;
+  padding:2px 10px;
+  border-radius:999px;
+  border:1px solid;
+}
+.tb-v{
+  background:rgba(26,92,42,0.08);
+  color:var(--green);border-color:rgba(26,92,42,0.2);
+}
+.tb-a{
+  background:rgba(21,101,192,0.08);
+  color:#1565c0;border-color:rgba(21,101,192,0.2);
+}
+.tb-m{
+  background:rgba(123,31,162,0.08);
+  color:#7b1fa2;border-color:rgba(123,31,162,0.2);
+}
+.tb-done{
+  background:rgba(26,92,42,0.1);
+  color:var(--green);border-color:var(--green);
+}
+
+.card-btn-wrap{padding:0 14px 14px;}
+.btn-play{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:10px;
+  border:none;border-radius:var(--radius-sm);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:12px;font-weight:700;cursor:pointer;
+  text-decoration:none;transition:opacity 0.2s;
+}
+.btn-play:active{opacity:0.8;}
+.btn-v{background:var(--green-light);color:var(--green);}
+.btn-a{background:#e3f2fd;color:#1565c0;}
+.btn-m{background:#f3e5f5;color:#7b1fa2;}
+.btn-done{background:var(--green);color:#fff;}
+
+/* BACK TO TOP */
+.back-top{
+  position:fixed;bottom:24px;left:20px;
+  width:44px;height:44px;
+  background:var(--green);
+  color:#fff;border:none;border-radius:50%;
+  font-size:18px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(26,92,42,0.35);
+  display:none;
+  align-items:center;justify-content:center;
+  z-index:90;
+  transition:opacity 0.3s;
+}
+.back-top.show{display:flex;}
+
+/* SUPPORT PANEL */
+.support-drawer{
+  position:fixed;bottom:-300px;left:0;right:0;
+  background:#fff;border-radius:20px 20px 0 0;
+  padding:20px;z-index:200;
+  transition:bottom 0.3s ease;
+  box-shadow:0 -8px 30px rgba(0,0,0,0.15);
+}
+.support-drawer.open{bottom:0;}
+.support-handle{
+  width:40px;height:4px;background:#e0e0e0;
+  border-radius:2px;margin:0 auto 16px;
+}
+.support-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;text-align:center;}
+.support-btns{display:flex;flex-direction:column;gap:8px;}
+.btn-wa{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:13px;font-weight:700;text-decoration:none;
+}
+.btn-ei{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#2d5986,#3b6fa0);
+  color:#fff;font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:13px;font-weight:700;text-decoration:none;
+}
+.btn-call{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px;border-radius:var(--radius-sm);
+  background:var(--green-light);color:var(--green);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:13px;font-weight:700;text-decoration:none;
+}
+
+footer{
+  text-align:center;color:var(--muted);
+  font-size:11px;padding:16px 16px 30px;
+}
+footer b{color:var(--green);}
 </style>
-</head>
-<body>
+</head><body>
 
-<!-- صفحه ورود -->
-<div class="login-page" id="loginPage">
-  <div class="login-badge">🆓 نسخه آزمایشی و رایگان</div>
-  <div class="login-card">
-    <div class="login-logo">
-      <div class="lt">DAMDARAN<span>PLUS</span></div>
-      <div class="ls">مرجع آموزش دامداری</div>
-    </div>
-    <div class="login-title">خوش آمدی دامدار!</div>
-    <div class="login-sub">برای استفاده از ماشین‌حساب خوراک دام، اطلاعات زیر را وارد کنید</div>
-    <div class="login-field">
-      <label>نام</label>
-      <input type="text" id="firstName" placeholder="نام شما">
-    </div>
-    <div class="login-field">
-      <label>نام خانوادگی</label>
-      <input type="text" id="lastName" placeholder="نام خانوادگی شما">
-    </div>
-    <div class="login-field">
-      <label>شماره موبایل</label>
-      <input type="tel" id="phone" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" maxlength="11">
-    </div>
-    <button class="btn-login" onclick="doLogin()">ورود به ماشین‌حساب ←</button>
-    <div class="login-sending" id="loginSending">⏳ در حال ثبت اطلاعات...</div>
-    <div class="login-note">اطلاعات شما محرمانه بوده و فقط برای بهبود خدمات استفاده می‌شود</div>
+<!-- ===== DRAWER MENU ===== -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-logo">DAMDARAN<span>PLUS</span></div>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
   </div>
-</div>
+  <div class="drawer-body">
 
-<!-- اپ اصلی -->
-<div class="app-page" id="appPage">
-  <div class="header">
-    <div class="logo-wrap">
-      <div class="logo-text">DAMDARAN<span>PLUS</span></div>
-      <div class="logo-sub">دامداران پلاس پیشرو درآموزش</div>
-    </div>
-    <div class="header-left">
-      <button class="btn-logout" onclick="doLogout()">خروج</button>
-      <button class="request-trigger" onclick="toggleMenu()">
-        🌾 درخواست جیره
-      </button>
-      <!-- منوی درخواست جیره -->
-      <div class="request-menu" id="requestMenu">
-        <h4>📋 درخواست جیره اختصاصی</h4>
-        <a href="https://eitaa.com/mohammad_aghamiri" target="_blank" class="request-btn eitaa">
-          💬 پیام در ایتا
-        </a>
-        <a href="https://wa.me/989198340686" target="_blank" class="request-btn whatsapp">
-          📱 پیام در واتساپ
-        </a>
+    <!-- منوی اصلی -->
+    <div id="drawerMain">
+      <div class="drawer-item" onclick="showDrawerPanel('about')">
+        <div class="di-icon">🏛️</div>
+        دامداران پلاس
+      </div>
+      <div class="drawer-item" onclick="showDrawerPanel('consult')">
+        <div class="di-icon">💬</div>
+        مشـاوره بـا محمد آقامیری
+      </div>
+      <div class="drawer-item" onclick="showDrawerPanel('profit')">
+        <div class="di-icon">💰</div>
+        سود کردم! 😊
+      </div>
+      <div class="drawer-divider"></div>
+      <div class="drawer-item" onclick="doLogout()">
+        <div class="di-icon">🚪</div>
+        خروج از دوره
       </div>
     </div>
-  </div>
 
-  <div class="welcome-bar" id="welcomeBar">خوش اُمدی دامدار!🖐</div>
+    <!-- پنل: درباره -->
+    <div class="drawer-panel" id="panel-about">
+      <div class="drawer-back" onclick="showDrawerPanel('main')">← برگشت</div>
+      <div class="drawer-panel-title">🏛️ دامداران پلاس</div>
+      <div class="drawer-panel-text">
+        سید محمد آقامیری، بنیان‌گذار رسانه آموزشی دامداران پلاس، از سال ۱۳۹۵ به‌صورت تخصصی در حوزه آموزش دامداری و تغذیه دام فعالیت می‌کند.
+        <br><br>
+        فارغ‌التحصیل رشته علوم دامی از دانشگاه آزاد اسلامی گلپایگان و دارای حدود ۱۰ سال سابقه عملی در زمینه پرواربندی، جیره‌نویسی و مدیریت گله‌های دام سبک است.
+        <br><br>
+        دامداران پلاس با هدف انتقال آموزش‌های کاربردی و اقتصادی به دامداران ایرانی راه‌اندازی شده و تاکنون هزاران دامدار از آموزش‌ها، فرمول‌های خوراک و برنامه‌های تخصصی این مجموعه استفاده کرده‌اند.
+        <br><br>
+        حوزه تخصصی ایشان شامل پرواربندی صنعتی دام سبک، میش‌داری، فرمولاسیون خوراک، کاهش هزینه‌های تغذیه و افزایش سودآوری دامداری است.
+        <br><br>
+        امروز دامداران پلاس به‌عنوان یک مرجع آموزشی شناخته می‌شود که تلاش می‌کند دانش روز تغذیه و مدیریت دام را به زبان ساده و عملی در اختیار دامداران قرار دهد.
+      </div>
+    </div>
 
-  <div class="hero">
-    <span class="hero-badge">🥇اولین ابزارمحاسبه خوراک دام</span>
-    <h1>ماشین‌حساب خوراک دام</h1>
-    <p>جیره روزانه، مصرف گله و هزینه ماهانه<br>همه در یک جابرای شما</p>
-  </div>
-
-  <div class="content">
-    <div class="card">
-      <div class="card-title"><div class="icon">🧮</div>اطلاعات دام</div>
-      <div class="field">
-        <label>نوع دام</label>
-        <div class="select-wrap">
-          <select id="animalType">
-            <option value="">— انتخاب کنید —</option>
-            <optgroup label="میش">
-              <option value="sheep-idle">میش قصر (نگهداری)</option>
-              <option value="flushing">فلاشینگ</option>
-            </optgroup>
-            <optgroup label="آبستن">
-              <option value="pregnant-single-70">آبستن تک‌قلو (۷۰ روز آخر)</option>
-              <option value="pregnant-twin-60">آبستن دو قلو (۶۰ روز آخر)</option>
-              <option value="pregnant-single-heavy">آبستن سنگین تک‌قلو</option>
-              <option value="pregnant-twin-heavy">آبستن سنگین دو قلو</option>
-            </optgroup>
-            <optgroup label="شیرده">
-              <option value="lactating-single">شیرده تک‌قلوزا</option>
-              <option value="lactating-twin">شیرده دوقلوزا</option>
-              <option value="lactating-peak">لاکن و اصف شیرده</option>
-            </optgroup>
-            <optgroup label="پرواری و سایر">
-              <option value="fattening">پرورار (گوسفند پرواری)</option>
-              <option value="lamb-milk">بره شیرخوار</option>
-              <option value="ewe-lambs">شیشک‌های ماده</option>
-            </optgroup>
+    <!-- پنل: مشاوره -->
+    <div class="drawer-panel" id="panel-consult">
+      <div class="drawer-back" onclick="showDrawerPanel('main')">← برگشت</div>
+      <div class="drawer-panel-title">💬 درخواست مشاوره</div>
+      <div class="consult-form">
+        <div class="cf-field">
+          <label>نام و نام خانوادگی</label>
+          <input type="text" id="cName" placeholder="نام کامل شما">
+        </div>
+        <div class="cf-field">
+          <label>شماره تماس</label>
+          <input type="tel" id="cPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹">
+        </div>
+        <div class="cf-field">
+          <label>شغل فعلی</label>
+          <input type="text" id="cJob" placeholder="مثال: دامدار، کارمند، ...">
+        </div>
+        <div class="cf-field">
+          <label>نوع درخواست مشاوره</label>
+          <select id="cType">
+            <option value="">انتخاب کنید</option>
+            <option>شروع پرواربندی بره</option>
+            <option>جیره‌نویسی اختصاصی</option>
+            <option>میش‌داری</option>
+            <option>کاهش هزینه خوراک</option>
+            <option>فرمول سینرژی</option>
+            <option>سایر</option>
           </select>
         </div>
-      </div>
-      <div class="field">
-        <label>وزن دام (کیلوگرم)</label>
-        <input type="number" id="weight" placeholder="مثال: ۵۰" min="1" max="200">
-      </div>
-      <div class="field">
-        <label>تعداد دام (رأس)</label>
-        <input type="number" id="herdCount" placeholder="مثال: ۸۰" min="1">
-      </div>
-      <div class="field">
-        <label>قیمت خوراک (هزار تومان / کیلوگرم) — اختیاری</label>
-        <input type="number" id="feedPrice" placeholder="برای محاسبه هزینه وارد کنید">
-      </div>
-      <div class="price-hint" id="priceHint" style="display:none">
-        💡 قیمت خوراک رو بنویس تا بهت بگم چقدر قراره هزینه کنی!
-      </div>
-      <div class="field">
-        <label>درصد جو از کنسانتره (%)</label>
-        <input type="number" id="barleyPct" placeholder="مثال: ۸۶" min="0" max="100">
-      </div>
-      <button class="btn-calc" onclick="calculate()">
-        <span>🐑</span> محاسبه کامل
-      </button>
-    </div>
-
-    <!-- نتایج -->
-    <div class="result-card" id="resultCard">
-      <div class="result-header">
-        <div class="animal-name" id="rAnimalName">—</div>
-        <div class="animal-weight" id="rWeight">—</div>
-      </div>
-      <div class="section-title">🐑 مصرف هر رأس در روز</div>
-      <div class="total-box">
-        <div class="label">کل خوراک روزانه هر رأس</div>
-        <div class="value" id="rTotal">—</div>
-        <div class="unit" id="rTotalUnit">—</div>
-      </div>
-      <div class="split-grid">
-        <div class="split-item concentrate">
-          <div class="s-label">کنسانتره</div>
-          <div class="s-value" id="rConc">—</div>
-          <div class="s-unit" id="rConcUnit">—</div>
-          <div class="s-pct" id="rConcPct">—</div>
-        </div>
-        <div class="split-item forage">
-          <div class="s-label">علوفه (کاه)</div>
-          <div class="s-value" id="rFor">—</div>
-          <div class="s-unit" id="rForUnit">—</div>
-          <div class="s-pct" id="rForPct">—</div>
-        </div>
-      </div>
-      <div class="note-box" id="rNote"></div>
-      <div class="divider"></div>
-      <div id="herdSection" style="display:none">
-        <div class="section-title">🐑🐑 مصرف کل گله</div>
-        <div class="herd-box">
-          <div class="herd-title">📊 خلاصه مصرف گله</div>
-          <div class="herd-row"><span class="hr-label">تعداد دام</span><span class="hr-value green" id="hCount">—</span></div>
-          <div class="herd-row"><span class="hr-label">مصرف هر رأس در روز</span><span class="hr-value" id="hPerHead">—</span></div>
-          <div class="herd-row"><span class="hr-label">✅ مصرف کل گله در روز</span><span class="hr-value green" id="hDaily">—</span></div>
-          <div class="herd-row"><span class="hr-label">✅ مصرف کل گله در ماه</span><span class="hr-value yellow" id="hMonthly">—</span></div>
-        </div>
-        <div class="month-grid">
-          <div class="month-item"><div class="m-label">کنسانتره ماهانه گله</div><div class="m-value" id="mConc">—</div><div class="m-unit" id="mConcUnit">—</div></div>
-          <div class="month-item dark"><div class="m-label">علوفه (کاه) ماهانه گله</div><div class="m-value" id="mFor">—</div><div class="m-unit" id="mForUnit">—</div></div>
-        </div>
-        <div class="ingr-grid">
-          <div class="ingr-item"><div class="i-label">🌾 جو موردنیاز ماهانه</div><div class="i-value" id="iBarley">—</div><div class="i-unit" id="iBarleyUnit">—</div></div>
-          <div class="ingr-item"><div class="i-label">🌿 کاه موردنیاز ماهانه</div><div class="i-value" id="iStraw">—</div><div class="i-unit" id="iStrawUnit">—</div></div>
-        </div>
-        <div class="cost-box" id="costBox" style="display:none">
-          <div class="c-label">💰 هزینه خوراک ماهانه کل گله (تومان)</div>
-          <div class="c-value" id="cValue">—</div>
-          <div class="c-unit">میلیون تومان در ماه</div>
-          <div class="c-words" id="cWords">—</div>
-        </div>
-        <div class="no-price-box" id="noPriceBox" style="display:none">
-          <p>💡 <b>قیمت خوراک رو بنویس</b> تا بهت بگم<br>چقدر قراره هزینه کنی!</p>
-        </div>
-      </div>
-      <button class="btn-share" onclick="share()">📤 اشتراک‌گذاری نتایج</button>
-    </div>
-
-    <!-- فرمول سینـرژی -->
-    <div class="info-card">
-      <div class="info-icon"><span class="blink">⚡</span></div>
-      <div class="info-text">
-        <h3>فرمول سینرژی</h3>
-        <div class="info-sub">نسل جدید فـرمول‌های بصرفه</div>
-        <p>جیره اقتصادی پرواری — بدون یونجه، بدون ذرت — وزن‌گیری بالای ۱۰ کیلو در ماه با هزینه ۵۰ تا ۵۵ هزار تومان</p>
+        <button class="btn-wa-send" onclick="sendConsultWA()">
+          📱 ارسال به واتساپ
+        </button>
+        <button class="btn-eitaa-send" onclick="sendConsultEitaa()">
+          💬 ارسال به ایتا
+        </button>
       </div>
     </div>
 
-    <div class="socials">
-      <a href="https://instagram.com/damdaranplus" target="_blank" class="social-btn">📷 اینستاگرام</a>
-      <a href="https://t.me/damdaranplus" target="_blank" class="social-btn">✈️ تلگرام</a>
-      <a href="https://eitaa.com/damdaranplus" target="_blank" class="social-btn">💬 ایتا</a>
+    <!-- پنل: سود کردم -->
+    <div class="drawer-panel" id="panel-profit">
+      <div class="drawer-back" onclick="showDrawerPanel('main')">← برگشت</div>
+      <div class="profit-title">سود کردم! 🎉</div>
+      <div class="profit-sub">
+        اگر به سود مثبت ۳ میلیون تومان روی هر بره رسیدی، حتماً به پشتیبانی اطلاع بده و این مشخصات رو تکمیل کن:
+      </div>
+      <div class="consult-form">
+        <div class="cf-field">
+          <label>نام و نام خانوادگی</label>
+          <input type="text" id="pName" placeholder="نام کامل شما">
+        </div>
+        <div class="cf-field">
+          <label>شماره تماس</label>
+          <input type="tel" id="pPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹">
+        </div>
+        <div class="cf-field">
+          <label>تعداد بره‌های پرواری</label>
+          <input type="number" id="pCount" placeholder="مثال: ۵۰">
+        </div>
+        <div class="cf-field">
+          <label>قیمت هر کیلو خوراک (هزار تومان)</label>
+          <input type="number" id="pFeedPrice" placeholder="مثال: ۵۵">
+        </div>
+        <div class="cf-field">
+          <label>سود خالص شما (تومان)</label>
+          <input type="text" id="pProfit" placeholder="مثال: ۱۵۰،۰۰۰،۰۰۰">
+        </div>
+        <button class="btn-wa-send" onclick="sendProfitWA()">
+          📱 ارسال به واتساپ
+        </button>
+        <button class="btn-eitaa-send" onclick="sendProfitEitaa()">
+          💬 ارسال به ایتا
+        </button>
+      </div>
     </div>
 
-    <div class="support-card">
-      <h3>💬 پشتیبانی و مشاوره</h3>
-      <p>برای مشاوره تخصصی جیره‌نویسی و سؤالات تغذیه دام با ما در ارتباط باشید</p>
-      <a href="https://eitaa.com/damdaranplus" target="_blank" class="btn-support">💬 ورود به کانال ایتا</a>
-      <a href="tel:09198340686" class="btn-call">📞 تماس مستقیم: ۰۹۱۹۸۳۴۰۶۸۶</a>
+  </div>
+</div>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div class="auth-page active" id="loginPage">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-text">DAMDARAN<span>PLUS</span></div>
+      <div class="auth-logo-sub">دامداران پلاس پیشرو در آموزش</div>
+    </div>
+    <div class="auth-title">🎓 ورود به دوره</div>
+    <div class="auth-sub">شماره موبایل و رمز شخصی خود را وارد کنید</div>
+    <div class="field">
+      <label>شماره موبایل</label>
+      <input type="tel" id="lPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11">
+    </div>
+    <div class="field">
+      <label>رمز شخصی</label>
+      <input type="password" id="lPass" placeholder="رمز شخصی خود را وارد کنید">
+    </div>
+    <button class="btn-auth" onclick="doLogin()">ورود به دوره ←</button>
+    <div class="forgot-link">
+      <button onclick="showPage('forgotPage')">رمز خود را فراموش کردید؟</button>
+    </div>
+    <div class="auth-switch">
+      هنوز ثبت‌نام نکردید؟
+      <button onclick="showPage('registerPage')">ثبت‌نام کنید</button>
+    </div>
+    <div class="warn-note">🔐 دوره اختصاصی — رمز خود را با کسی به اشتراک نگذارید</div>
+  </div>
+</div>
+
+<!-- ===== REGISTER PAGE ===== -->
+<div class="auth-page" id="registerPage">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-text">DAMDARAN<span>PLUS</span></div>
+      <div class="auth-logo-sub">دامداران پلاس پیشرو در آموزش</div>
+    </div>
+    <div class="auth-title">📝 ثبت‌نام در دوره</div>
+    <div class="auth-sub">اطلاعات خود را کامل وارد کنید</div>
+    <div class="field">
+      <label>نام</label>
+      <input type="text" id="rFirst" placeholder="نام شما">
+    </div>
+    <div class="field">
+      <label>نام خانوادگی</label>
+      <input type="text" id="rLast" placeholder="نام خانوادگی شما">
+    </div>
+    <div class="field">
+      <label>شماره موبایل</label>
+      <input type="tel" id="rPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11">
+    </div>
+    <div class="field">
+      <label>رمز شخصی دلخواه</label>
+      <input type="password" id="rPass" placeholder="رمز دلخواه خود را بسازید">
+      <div class="pass-note">
+        ⚠️ این رمز را حتماً یادداشت کنید!<br>
+        می‌تواند ترکیبی از اعداد، حروف بزرگ (A-Z) و کوچک (a-z) باشد.<br>
+        مثال: Ahmad1402 یا Galle123
+      </div>
+    </div>
+    <div class="field">
+      <label>تکرار رمز شخصی</label>
+      <input type="password" id="rPass2" placeholder="رمز را دوباره وارد کنید">
+    </div>
+    <button class="btn-auth" onclick="doRegister()">ثبت‌نام و ورود ←</button>
+    <div class="auth-switch">
+      قبلاً ثبت‌نام کردید؟
+      <button onclick="showPage('loginPage')">وارد شوید</button>
     </div>
   </div>
-  <footer>© ۱۴۰۴ <span>DAMDARANPLUS</span> — سید محمد آقامیری | متخصص تغذیه دام</footer>
 </div>
-<script>
-const SHEETDB='https://sheetdb.io/api/v1/n99kpahoxut7v';
 
-const animals={
-  'sheep-idle':{name:'میش قصر (نگهداری)',conc:80,for:20,pct:3.5,note:'مقدار توصیه‌شده: ۱۶۰۰ تا ۱۷۰۰ گرم در روز'},
-  'flushing':{name:'فلاشینگ',conc:40,for:60,pct:4.0,note:'در حد اشتها — برای افزایش باروری'},
-  'pregnant-single-70':{name:'آبستن تک‌قلو سبک (۷۰ روز آخر)',conc:70,for:30,pct:3.5,note:'مقدار توصیه‌شده: ۱۸۰۰ گرم در روز'},
-  'pregnant-twin-60':{name:'آبستن دو قلو سبک (۶۰ روز آخر)',conc:60,for:40,pct:4.0,note:'مقدار توصیه‌شده: ۲۱۰۰ گرم در روز'},
-  'pregnant-single-heavy':{name:'آبستن سنگین تک‌قلو',conc:58,for:42,pct:4.0,note:'جو و ذرت حیاتی — ۵۵ تا ۶۰٪ کنسانتره'},
-  'pregnant-twin-heavy':{name:'آبستن سنگین دو قلو',conc:58,for:42,pct:4.5,note:'جو و ذرت حیاتی — مقدار: ۲۴۰۰ گرم'},
-  'lactating-single':{name:'شیرده تک‌قلوزا',conc:50,for:50,pct:4.5,note:'یونجه با کیفیت توصیه می‌شود'},
-  'lactating-twin':{name:'شیرده دوقلوزا',conc:45,for:55,pct:5.5,note:'در حد اشتها — ۲۷۰۰ تا ۳۰۰۰ گرم'},
-  'lactating-peak':{name:'لاکن و اصف شیرده',conc:40,for:60,pct:6.0,note:'در حد اشتها — ۳۰۰۰ تا ۳۱۰۰ گرم'},
-  'fattening':{name:'پرورار (گوسفند پرواری)',conc:75,for:25,pct:4.0,note:'در حد اشتها — مناسب فرمول سینرژی ⚡'},
-  'lamb-milk':{name:'بره شیرخوار',conc:78,for:22,pct:4.5,note:'در حد اشتها'},
-  'ewe-lambs':{name:'شیشک‌های ماده',conc:60,for:40,pct:4.0,note:'در حد اشتها'}
+<!-- ===== FORGOT PAGE ===== -->
+<div class="auth-page" id="forgotPage">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-text">DAMDARAN<span>PLUS</span></div>
+    </div>
+    <div class="auth-title">🔑 بازیابی رمز</div>
+    <div class="auth-sub">برای بازیابی رمز، شماره موبایل و نام خانوادگی خود را وارد کنید</div>
+    <div class="field">
+      <label>شماره موبایل</label>
+      <input type="tel" id="fPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" maxlength="11">
+    </div>
+    <div class="field">
+      <label>نام خانوادگی</label>
+      <input type="text" id="fLast" placeholder="نام خانوادگی شما">
+    </div>
+    <div class="field" id="newPassField" style="display:none">
+      <label>رمز جدید</label>
+      <input type="password" id="fNewPass" placeholder="رمز جدید خود را وارد کنید">
+    </div>
+    <button class="btn-auth" onclick="doForgot()">تأیید و بازیابی</button>
+    <div class="auth-switch">
+      <button onclick="showPage('loginPage')">← برگشت به ورود</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP PAGE ===== -->
+<div class="app-page" id="appPage">
+
+  <!-- HEADER -->
+  <div class="header">
+    <button class="hamburger" onclick="openDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="header-logo">
+      <div class="header-logo-text">DAMDARAN<span>PLUS</span></div>
+      <div class="header-logo-sub">دامداران پلاس پیشرو در آموزش</div>
+    </div>
+    <button class="btn-support-h" onclick="openSupport()">
+      🎧 پشتیبانی دوره
+    </button>
+  </div>
+
+  <!-- WELCOME -->
+  <div class="welcome-bar" id="welcomeBar">👋 خوش آمدید!</div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-badge">⚡ نسخه اختصاصی هنرجویان</span>
+    <h1>دوره پرواربندی<br><span>پیشرفته</span></h1>
+    <div class="hero-sub">مرجع تخصصی آموزش نوین پرواربندی دام سبک</div>
+    <div class="stats-row">
+      <div class="stat-bubble">
+        <span class="stat-num">۳۴</span>
+        <span class="stat-label">درس آموزشی</span>
+      </div>
+      <div class="stat-bubble">
+        <span class="stat-num">+۷</span>
+        <span class="stat-label">ساعت آموزش</span>
+      </div>
+      <div class="stat-bubble">
+        <span class="stat-num">+۵K</span>
+        <span class="stat-label">هنرجو</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-card">
+      <div class="progress-top">
+        <div class="progress-title">📊 پیشرفت شما</div>
+        <div class="progress-pct" id="progressPct">۰٪</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text" id="progressText">۰ از ۳۴ درس مشاهده شده</div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- فصل اول -->
+    <div class="section-head">
+      <div class="section-badge">🔵 فصل اول: مدیریت و رسیدگی</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="video-grid" id="chapter1"></div>
+
+    <!-- فصل دوم -->
+    <div class="section-head">
+      <div class="section-badge">🟢 فصل دوم: اکشن پلن تغذیه</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="video-grid" id="chapter2"></div>
+
+  </div>
+
+  <footer>© ۱۴۰۴ <b>DAMDARANPLUS</b> — سید محمد آقامیری | متخصص تغذیه دام</footer>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- SUPPORT BOTTOM SHEET -->
+<div class="overlay" id="supportOverlay" onclick="closeSupport()"></div>
+<div class="support-drawer" id="supportDrawer">
+  <div class="support-handle"></div>
+  <div class="support-title">🎧 پشتیبانی و مشاوره</div>
+  <div class="support-btns">
+    <a href="https://wa.me/989198340686" target="_blank" class="btn-wa">📱 پیام در واتساپ</a>
+    <a href="https://eitaa.com/mohammad_aghamiri" target="_blank" class="btn-ei">💬 پیام در ایتا</a>
+    <a href="tel:09198340686" class="btn-call">📞 تماس مستقیم</a>
+  </div>
+</div><script>
+const SHEETDB='https://sheetdb.io/api/v1/a7vngqwyoxugf';
+const TOTAL=34;
+const WA_NUM='989198340686';
+const EITAA='mohammad_aghamiri';
+
+// داده دروس
+const chapters={
+  1:[
+    {id:1,title:'مقدمه پرواربندی پیشرفته',time:'۳:۵۵',type:'v',url:'https://doo.st/مقدمه_پرواربندی_پیشرفته-ویدیو'},
+    {id:2,title:'هوش مالی در پرواربندی',time:'۲۲:۳۶',type:'v',url:'https://doo.st/هوش_مالی_درپروار-صوتی'},
+    {id:3,title:'روانشناسی تولید',time:'۲۳:۵۶',type:'a',url:'https://doo.st/روانشناسی_تولید-صوتی'},
+    {id:4,title:'ضدعفونی جایگاه',time:'۷:۴۲',type:'v',url:'https://doo.st/ضدعفونی_جایگاه-ویدیو'},
+    {id:5,title:'ضریب تبدیل غذایی',time:'۱۰:۱۳',type:'a',url:'https://doo.st/ضریب_تبدیل_غذایی-صوتی'},
+    {id:6,title:'مشخصات ظاهری دام پرواری',time:'۱۱:۵۱',type:'m',url:'https://doo.st/مشخصات_ظاهری_دام_پرواری-ویدیو-صوتی'},
+    {id:7,title:'پیک اشتها در پرواربندی',time:'۵:۲۲',type:'v',url:'https://doo.st/پیک_اشتهادرپروار-ویدیو'},
+    {id:8,title:'مدیریت آخور',time:'۱۲:۱۹',type:'v',url:'https://doo.st/مدیریت-آخور_ویدیو'},
+    {id:9,title:'نحوه خوراک‌دهی صحیح',time:'۱۵:۰۴ + ۲:۵۸',type:'m',url:'https://doo.st/نحوه_خوراکدهی_صحیح-صوتی'},
+    {id:10,title:'پرواربندی فشرده',time:'۹:۳۲',type:'a',url:'https://doo.st/پرواربندی_فشرده-صوتی'},
+    {id:11,title:'پرواربندی مرتعی',time:'۱۵:۲۱',type:'a',url:'https://doo.st/پرواربندی_مرتعی-صوتی'},
+    {id:12,title:'پرواربندی مناسبتی یا فصلی',time:'۱۲:۱۹',type:'v',url:'https://doo.st/پروارمناسبتی_یافصلی-ویدیو'},
+    {id:13,title:'استپ وزنی',time:'۹:۴۱',type:'a',url:'https://doo.st/استپ_وزنی-صوتی'},
+    {id:14,title:'محرک رشد در پرواربندی',time:'۹:۰۰',type:'a',url:'https://doo.st/مُحرک_رشددرپروار-صوتی'},
+    {id:15,title:'بیماری‌ها در پرواربندی',time:'۳:۲۶',type:'a',url:'https://doo.st/بیماری_هادرپروار-صوتی'},
+    {id:16,title:'بازاریابی و فروش',time:'۱۰:۳۳',type:'a',url:'https://doo.st/بازاریابی_فروش-صوتی'},
+    {id:17,title:'مخمر در پرواربندی',time:'۳:۳۰',type:'v',url:'https://doo.st/مخمردرپرواربندی-ویدیو'},
+  ],
+  2:[
+    {id:18,title:'مقدمه اکشن پلن تغذیه',time:'۲:۰۰',type:'a',url:'https://doo.st/مقدمه_اکشن_پلن_تغذیه'},
+    {id:19,title:'مدیریت آخور',time:'۲۸:۰۷',type:'v',url:'https://doo.st/مدیریت_آخور-ویدیو'},
+    {id:20,title:'جیره خزشی',time:'۸:۰۷',type:'v',url:'https://doo.st/جیره_خزشی-ویدیو'},
+    {id:21,title:'دستورالعمل سازگاری',time:'۱۰:۵۸',type:'v',url:'https://doo.st/دستورالعمل_سازگاری_ویدیو'},
+    {id:22,title:'جیره سازگاری مصرف حد اشتها',time:'۱۱:۱۳',type:'m',url:'https://doo.st/جیره_سازگاری_مصرف_حداشتها-ویدیو-صوتی'},
+    {id:23,title:'فرمول خوراک سِپر پیشرفته',time:'۲۳:۲۶',type:'v',url:'https://doo.st/فرمول_خوراک_سپِرپیشرفته'},
+    {id:24,title:'فرمول سینرژی نسخه ۱',time:'۲۰:۰۰',type:'v',url:'https://doo.st/فرمول_سینرژی_نسخه۱'},
+    {id:25,title:'جیره بصرفه پرواری - فرمول سِپر',time:'۱۴:۴۲',type:'v',url:'https://doo.st/جیره-بصرفه-پرواری-فرمول_سِپر'},
+    {id:26,title:'ساخت خوراک پرواری',time:'۳۲:۱۰',type:'m',url:'https://doo.st/ساخت_خوراک_پرواری_صوتی-ویدیو'},
+    {id:27,title:'جیره‌های پرواری',time:'۹:۵۸',type:'m',url:'https://doo.st/جیره_های_پرواری-صوتی-ویدیو'},
+    {id:28,title:'وضعیت ظاهری کود پرواری',time:'۵:۱۵',type:'v',url:'https://doo.st/وضعیت_ظاهری_کودپرواری-ویدیو'},
+    {id:29,title:'خوراک استارتر بره شیرخوار',time:'۱۶:۱۹',type:'v',url:'https://doo.st/خوراک_استارار_بره_شیرخوار-ویدیو'},
+    {id:30,title:'مقدمه جیره‌نویسی',time:'۵:۱۱',type:'a',url:'https://doo.st/مقدمه_جیره_نویسی-صوتی'},
+    {id:31,title:'شناخت اقلام در خوراک',time:'۲۸:۵۶',type:'a',url:'https://doo.st/شناخت_اقلام_درخوراک-صوتی'},
+    {id:32,title:'تکنیک استانداردسازی اقلام',time:'۷:۲۸',type:'v',url:'https://doo.st/تکنیک_استاندارد_سازی_اقلام-ویدیو'},
+    {id:33,title:'فرمول رشد ایتالیایی',time:'۲۱:۲۷',type:'v',url:'https://doo.st/فرمول-رشد-ایتالیایی_ویدیو'},
+  ]
 };
 
-function fmtG(g){
-  if(g>=1000){const kg=g/1000;return{val:(kg%1===0?kg:parseFloat(kg.toFixed(2))).toString(),unit:'کیلوگرم'};}
-  return{val:Math.round(g).toString(),unit:'گرم'};
-}
-function fmtBig(kg){
-  if(kg>=1000){return{val:parseFloat((kg/1000).toFixed(2)).toString(),unit:'تن'};}
-  return{val:Math.round(kg).toString(),unit:'کیلوگرم'};
-}
-function fmtHerd(kg){
-  if(kg>=1000){return parseFloat((kg/1000).toFixed(2))+' تن';}
-  return Math.round(kg)+' کیلوگرم';
+function typeInfo(t){
+  if(t==='v')return{label:'ویدیو',icon:'▶',numClass:'green-n',btnClass:'btn-v',badgeClass:'tb-v'};
+  if(t==='a')return{label:'🔊 صوتی',icon:'🔊',numClass:'blue-n',btnClass:'btn-a',badgeClass:'tb-a'};
+  return{label:'ویدیو + صوتی',icon:'▶',numClass:'purple-n',btnClass:'btn-m',badgeClass:'tb-m'};
 }
 
-function numToWords(n){
-  const ones=['','یک','دو','سه','چهار','پنج','شش','هفت','هشت','نه','ده','یازده','دوازده','سیزده','چهارده','پانزده','شانزده','هفده','هجده','نوزده'];
-  const tens=['','','بیست','سی','چهل','پنجاه','شصت','هفتاد','هشتاد','نود'];
-  const hundreds=['','یکصد','دویست','سیصد','چهارصد','پانصد','ششصد','هفتصد','هشتصد','نهصد'];
-  if(n===0)return'صفر تومان';
-  function h(n){
-    if(n===0)return'';
-    if(n<20)return ones[n];
-    if(n<100)return tens[Math.floor(n/10)]+(n%10?' و '+ones[n%10]:'');
-    return hundreds[Math.floor(n/100)]+(n%100?' و '+h(n%100):'');
+function buildCards(){
+  [1,2].forEach(ch=>{
+    const container=document.getElementById('chapter'+ch);
+    chapters[ch].forEach(lesson=>{
+      const t=typeInfo(lesson.type);
+      const div=document.createElement('div');
+      div.className='video-card';
+      div.id='card-'+lesson.id;
+      div.innerHTML=`
+        <div class="card-inner">
+          <div class="card-num ${t.numClass}" id="num-${lesson.id}">${lesson.id}</div>
+          <div class="card-info">
+            <div class="card-title">${lesson.title}</div>
+            <div class="card-meta">
+              <span class="card-time">⏱ ${lesson.time} دقیقه</span>
+              <span class="type-badge ${t.badgeClass}">${lesson.label}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-btn-wrap">
+          <a href="${lesson.url}" target="_blank"
+             class="btn-play ${t.btnClass}" id="btn-${lesson.id}"
+             onclick="markWatched(${lesson.id})">
+            <span>${t.icon}</span> پخش
+          </a>
+        </div>`;
+      container.appendChild(div);
+    });
+  });
+}// ===== AUTH =====
+function showPage(id){
+  document.querySelectorAll('.auth-page,.app-page').forEach(el=>{
+    el.classList.remove('active');
+    if(el.classList.contains('app-page'))el.style.display='none';
+  });
+  const target=document.getElementById(id);
+  if(target.classList.contains('app-page')){
+    target.style.display='block';
+    target.classList.add('active');
+  } else {
+    target.classList.add('active');
   }
-  const scales=['','هزار','میلیون','میلیارد'];
-  let result='';let si=0;let num=n;
-  while(num>0){
-    const chunk=num%1000;
-    if(chunk!==0){const s=h(chunk);result=s+(si>0?' '+scales[si]:'')+(result?' و '+result:'');}
-    num=Math.floor(num/1000);si++;
-  }
-  return result+' تومان';
 }
 
-// منوی درخواست جیره
-function toggleMenu(){
-  const menu=document.getElementById('requestMenu');
-  menu.classList.toggle('show');
-}
+async function doRegister(){
+  const first=document.getElementById('rFirst').value.trim();
+  const last=document.getElementById('rLast').value.trim();
+  const phone=document.getElementById('rPhone').value.trim();
+  const pass=document.getElementById('rPass').value.trim();
+  const pass2=document.getElementById('rPass2').value.trim();
+  if(!first||!last){alert('لطفاً نام و نام خانوادگی را وارد کنید');return;}
+  if(!phone||phone.length<10){alert('شماره موبایل معتبر وارد کنید');return;}
+  if(!pass||pass.length<4){alert('رمز باید حداقل ۴ کاراکتر باشد');return;}
+  if(pass!==pass2){alert('رمزها با هم مطابقت ندارند');return;}
 
-// بستن منو با کلیک بیرون
-document.addEventListener('click',function(e){
-  const menu=document.getElementById('requestMenu');
-  const trigger=document.querySelector('.request-trigger');
-  if(menu&&!menu.contains(e.target)&&!trigger.contains(e.target)){
-    menu.classList.remove('show');
-  }
-});
+  const users=JSON.parse(localStorage.getItem('dp_users')||'{}');
+  if(users[phone]){alert('این شماره قبلاً ثبت‌نام کرده است');return;}
 
-let last=null;
+  const user={first,last,phone,pass,watched:[],date:new Date().toLocaleDateString('fa-IR')};
+  users[phone]=user;
+  localStorage.setItem('dp_users',JSON.stringify(users));
+  localStorage.setItem('dp_cur',JSON.stringify({phone}));
 
-async function doLogin(){
-  const fn=document.getElementById('firstName').value.trim();
-  const ln=document.getElementById('lastName').value.trim();
-  const ph=document.getElementById('phone').value.trim();
-  if(!fn){alert('لطفاً نام را وارد کنید');return;}
-  if(!ln){alert('لطفاً نام خانوادگی را وارد کنید');return;}
-  if(!ph||ph.length<10){alert('لطفاً شماره موبایل را وارد کنید');return;}
-  document.getElementById('loginSending').style.display='block';
-  const now=new Date();
+  // ذخیره در SheetDB
   try{
     await fetch(SHEETDB,{
       method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({data:[{
-        'نام':fn,
-        'نام خانوادگی':ln,
-        'شماره':ph,
-        'تاریخ':now.toLocaleDateString('fa-IR')+' — '+now.toLocaleTimeString('fa-IR')
+        'نام':first+' '+last,
+        'شماره':phone,
+        'رمز':pass,
+        'تاریخ ثبت‌نام':user.date,
+        'پیشرفت':'۰٪'
       }]})
     });
   }catch(e){console.log(e);}
-  localStorage.setItem('dp_user',JSON.stringify({fn,ln,ph}));
-  document.getElementById('loginSending').style.display='none';
-  showApp(fn+' '+ln);
+
+  enterApp(user);
+}
+
+function doLogin(){
+  const phone=document.getElementById('lPhone').value.trim();
+  const pass=document.getElementById('lPass').value.trim();
+  if(!phone){alert('شماره موبایل را وارد کنید');return;}
+  if(!pass){alert('رمز شخصی را وارد کنید');return;}
+  const users=JSON.parse(localStorage.getItem('dp_users')||'{}');
+  if(!users[phone]){alert('این شماره ثبت‌نام نکرده است\nلطفاً ابتدا ثبت‌نام کنید');return;}
+  if(users[phone].pass!==pass){alert('رمز شخصی اشتباه است');return;}
+  localStorage.setItem('dp_cur',JSON.stringify({phone}));
+  enterApp(users[phone]);
+}
+
+function doForgot(){
+  const phone=document.getElementById('fPhone').value.trim();
+  const last=document.getElementById('fLast').value.trim();
+  const newPassField=document.getElementById('newPassField');
+  const newPass=document.getElementById('fNewPass').value.trim();
+
+  const users=JSON.parse(localStorage.getItem('dp_users')||'{}');
+  if(!users[phone]){alert('این شماره ثبت‌نام نکرده است');return;}
+  if(users[phone].last.toLowerCase()!==last.toLowerCase()){alert('نام خانوادگی مطابقت ندارد');return;}
+
+  if(!newPassField.style.display||newPassField.style.display==='none'){
+    newPassField.style.display='block';
+    alert('✅ هویت تأیید شد! رمز جدید خود را وارد کنید');
+    return;
+  }
+  if(!newPass||newPass.length<4){alert('رمز جدید باید حداقل ۴ کاراکتر باشد');return;}
+  users[phone].pass=newPass;
+  localStorage.setItem('dp_users',JSON.stringify(users));
+  alert('✅ رمز با موفقیت تغییر کرد! حالا وارد شوید');
+  showPage('loginPage');
 }
 
 function doLogout(){
-  localStorage.removeItem('dp_user');
-  document.getElementById('appPage').style.display='none';
-  document.getElementById('loginPage').style.display='flex';
+  localStorage.removeItem('dp_cur');
+  closeDrawer();
+  showPage('loginPage');
 }
 
-function showApp(name){
-  document.getElementById('loginPage').style.display='none';
-  document.getElementById('appPage').style.display='block';
-  document.getElementById('welcomeBar').textContent='👋 دامدارعزیز، '+name+'!';
+function enterApp(user){
+  showPage('appPage');
+  document.getElementById('welcomeBar').textContent=
+    `👋 خوش آمدی ${user.first} ${user.last} عزیز!`;
+  buildCards();
+  loadWatched();
+  updateProgress();
 }
 
+// ===== PROGRESS =====
+function markWatched(id){
+  const cur=JSON.parse(localStorage.getItem('dp_cur')||'null');
+  if(!cur)return;
+  const users=JSON.parse(localStorage.getItem('dp_users')||'{}');
+  const user=users[cur.phone];
+  if(!user)return;
+  if(!user.watched.includes(id)){
+    user.watched.push(id);
+    localStorage.setItem('dp_users',JSON.stringify(users));
+    updateProgress();
+    markCardDone(id);
+    // آپدیت SheetDB
+    const pct=Math.round((user.watched.length/TOTAL)*100)+'٪';
+    fetch(SHEETDB+'/شماره/'+cur.phone,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({'پیشرفت':pct})
+    }).catch(()=>{});
+  }
+}
+
+function markCardDone(id){
+  const card=document.getElementById('card-'+id);
+  const num=document.getElementById('num-'+id);
+  const btn=document.getElementById('btn-'+id);
+  if(card)card.classList.add('watched');
+  if(num){num.className='card-num watched-n';num.textContent='✓';}
+  if(btn){btn.className='btn-play btn-done';btn.innerHTML='<span>✅</span> مشاهده شد';}
+}
+
+function loadWatched(){
+  const cur=JSON.parse(localStorage.getItem('dp_cur')||'null');
+  if(!cur)return;
+  const users=JSON.parse(localStorage.getItem('dp_users')||'{}');
+  const user=users[cur.phone];
+  if(!user)return;
+  user.watched.forEach(id=>markCardDone(id));
+}
+
+function updateProgress(){
+  const cur=JSON.parse(localStorage.getItem('dp_cur')||'null');
+  if(!cur)return;
+  const users=JSON.parse(localStorage.getItem('dp_users')||'{}');
+  const user=users[cur.phone];
+  if(!user)return;
+  const w=user.watched.length;
+  const pct=Math.round((w/TOTAL)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+'٪';
+  document.getElementById('progressText').textContent=w+' از '+TOTAL+' درس مشاهده شده';
+}
+
+// ===== DRAWER =====
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  showDrawerPanel('main');
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+function showDrawerPanel(name){
+  document.getElementById('drawerMain').style.display=name==='main'?'block':'none';
+  document.querySelectorAll('.drawer-panel').forEach(p=>p.classList.remove('active'));
+  if(name!=='main'){
+    const panel=document.getElementById('panel-'+name);
+    if(panel)panel.classList.add('active');
+  }
+}
+
+// ===== SUPPORT =====
+function openSupport(){
+  document.getElementById('supportDrawer').classList.add('open');
+  document.getElementById('supportOverlay').classList.add('show');
+}
+function closeSupport(){
+  document.getElementById('supportDrawer').classList.remove('open');
+  document.getElementById('supportOverlay').classList.remove('show');
+}
+
+// ===== CONSULT =====
+function sendConsultWA(){
+  const n=document.getElementById('cName').value.trim();
+  const p=document.getElementById('cPhone').value.trim();
+  const j=document.getElementById('cJob').value.trim();
+  const t=document.getElementById('cType').value;
+  if(!n||!p||!t){alert('لطفاً همه موارد را تکمیل کنید');return;}
+  const msg=encodeURIComponent(
+    `📋 درخواست مشاوره\n\nنام: ${n}\nشماره: ${p}\nشغل: ${j}\nنوع مشاوره: ${t}\n\n@damdaranplus`
+  );
+  window.open(`https://wa.me/${WA_NUM}?text=${msg}`,'_blank');
+}
+function sendConsultEitaa(){
+  const n=document.getElementById('cName').value.trim();
+  const p=document.getElementById('cPhone').value.trim();
+  const j=document.getElementById('cJob').value.trim();
+  const t=document.getElementById('cType').value;
+  if(!n||!p||!t){alert('لطفاً همه موارد را تکمیل کنید');return;}
+  window.open(`https://eitaa.com/${EITAA}`,'_blank');
+  setTimeout(()=>alert(`لطفاً این پیام را در ایتا ارسال کنید:\n\nدرخواست مشاوره\nنام: ${n}\nشماره: ${p}\nشغل: ${j}\nنوع: ${t}`),500);
+}
+
+// ===== PROFIT =====
+function sendProfitWA(){
+  const n=document.getElementById('pName').value.trim();
+  const p=document.getElementById('pPhone').value.trim();
+  const c=document.getElementById('pCount').value.trim();
+  const f=document.getElementById('pFeedPrice').value.trim();
+  const pr=document.getElementById('pProfit').value.trim();
+  if(!n||!p){alert('لطفاً نام و شماره را وارد کنید');return;}
+  const msg=encodeURIComponent(
+    `💰 سود کردم!\n\nنام: ${n}\nشماره: ${p}\nتعداد بره: ${c} رأس\nقیمت خوراک: ${f} هزار تومان\nسود خالص: ${pr}\n\n@damdaranplus`
+  );
+  window.open(`https://wa.me/${WA_NUM}?text=${msg}`,'_blank');
+}
+function sendProfitEitaa(){
+  const n=document.getElementById('pName').value.trim();
+  const p=document.getElementById('pPhone').value.trim();
+  if(!n||!p){alert('لطفاً نام و شماره را وارد کنید');return;}
+  window.open(`https://eitaa.com/${EITAA}`,'_blank');
+}
+
+// ===== SCROLL =====
+window.addEventListener('scroll',()=>{
+  const btn=document.getElementById('backTop');
+  if(window.scrollY>300)btn.classList.add('show');
+  else btn.classList.remove('show');
+});
+
+// ===== INIT =====
 window.onload=function(){
-  const u=localStorage.getItem('dp_user');
-  if(u){const{fn,ln}=JSON.parse(u);showApp(fn+' '+ln);}
-  document.getElementById('feedPrice').addEventListener('input',function(){
-    if(this.value)document.getElementById('priceHint').style.display='none';
-  });
-};
-
-function calculate(){
-  const type=document.getElementById('animalType').value;
-  const w=parseFloat(document.getElementById('weight').value);
-  const count=parseInt(document.getElementById('herdCount').value)||0;
-  const priceRaw=document.getElementById('feedPrice').value;
-  const price=priceRaw?parseFloat(priceRaw):null;
-  const barleyPct=parseFloat(document.getElementById('barleyPct').value)||86;
-  if(!type){alert('لطفاً نوع دام را انتخاب کنید');return;}
-  if(!w||w<=0){alert('لطفاً وزن دام را وارد کنید');return;}
-  const d=animals[type];
-  const totalG=(w*d.pct/100)*1000;
-  const concG=totalG*d.conc/100;
-  const forG=totalG*d.for/100;
-  const total=fmtG(totalG);const conc=fmtG(concG);const forF=fmtG(forG);
-  document.getElementById('rAnimalName').textContent=d.name;
-  document.getElementById('rWeight').textContent='وزن: '+w+' کیلوگرم';
-  document.getElementById('rTotal').textContent=total.val;
-  document.getElementById('rTotalUnit').textContent=total.unit;
-  document.getElementById('rConc').textContent=conc.val;
-  document.getElementById('rConcUnit').textContent=conc.unit;
-  document.getElementById('rConcPct').textContent=d.conc+'٪';
-  document.getElementById('rFor').textContent=forF.val;
-  document.getElementById('rForUnit').textContent=forF.unit;
-  document.getElementById('rForPct').textContent=d.for+'٪';
-  document.getElementById('rNote').innerHTML='<b>📝 نکته:</b> '+d.note;
-  if(count>0){
-    const dailyKg=(totalG*count)/1000;
-    const monthlyKg=dailyKg*30;
-    const monthlyConcKg=(concG*count*30)/1000;
-    const monthlyForKg=(forG*count*30)/1000;
-    const barleyKg=monthlyConcKg*(barleyPct/100);
-    const mc=fmtBig(monthlyConcKg);const mf=fmtBig(monthlyForKg);
-    const ib=fmtBig(barleyKg);const is2=fmtBig(monthlyForKg);
-    document.getElementById('hCount').textContent=count+' رأس';
-    document.getElementById('hPerHead').textContent=total.val+' '+total.unit;
-    document.getElementById('hDaily').textContent=fmtHerd(dailyKg);
-    document.getElementById('hMonthly').textContent=fmtHerd(monthlyKg);
-    document.getElementById('mConc').textContent=mc.val;document.getElementById('mConcUnit').textContent=mc.unit;
-    document.getElementById('mFor').textContent=mf.val;document.getElementById('mForUnit').textContent=mf.unit;
-    document.getElementById('iBarley').textContent=ib.val;document.getElementById('iBarleyUnit').textContent=ib.unit;
-    document.getElementById('iStraw').textContent=is2.val;document.getElementById('iStrawUnit').textContent=is2.unit;
-    if(price){
-      const costM=monthlyKg*price;
-      document.getElementById('cValue').textContent=costM.toFixed(1);
-      document.getElementById('cWords').textContent=numToWords(Math.round(costM*1000));
-      document.getElementById('costBox').style.display='block';
-      document.getElementById('noPriceBox').style.display='none';
-    }else{
-      document.getElementById('costBox').style.display='none';
-      document.getElementById('noPriceBox').style.display='block';
-      document.getElementById('priceHint').style.display='block';
+  const cur=JSON.parse(localStorage.getItem('dp_cur')||'null');
+  if(cur){
+    const users=JSON.parse(localStorage.getItem('dp_users')||'{}');
+    if(users[cur.phone]){
+      enterApp(users[cur.phone]);
     }
-    document.getElementById('herdSection').style.display='block';
-    last={d,w,count,total,conc,forF,dailyKg,monthlyKg,barleyKg,monthlyForKg,price};
-  }else{
-    document.getElementById('herdSection').style.display='none';
-    last={d,w,count:0,total,conc,forF};
   }
-  const rc=document.getElementById('resultCard');
-  rc.classList.add('show');
-  rc.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-function share(){
-  if(!last)return;
-  const{d,w,count,total,conc,forF,dailyKg,monthlyKg,barleyKg,monthlyForKg,price}=last;
-  let text='🐑 محاسبه خوراک — DAMDARANPLUS\n\nنوع دام: '+d.name+'\nوزن: '+w+' کیلوگرم\n\nمصرف هر رأس:\nکل: '+total.val+' '+total.unit+'\nکنسانتره ('+d.conc+'٪): '+conc.val+' '+conc.unit+'\nعلوفه ('+d.for+'٪): '+forF.val+' '+forF.unit;
-  if(count>0){
-    text+='\n\nگله ('+count+' رأس):\nروزانه: '+fmtHerd(dailyKg)+'\nماهانه: '+fmtHerd(monthlyKg)+'\nجو: '+fmtHerd(barleyKg)+'\nکاه: '+fmtHerd(monthlyForKg);
-    if(price){const c=monthlyKg*price;text+='\nهزینه ماهانه: '+c.toFixed(1)+' میلیون تومان\n'+numToWords(Math.round(c*1000));}
-  }
-  text+='\n\n'+d.note+'\n\n📱 @damdaranplus';
-  if(navigator.share){navigator.share({text});}
-  else{navigator.clipboard.writeText(text).then(()=>alert('✅ کپی شد!'));}
-}
-
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+};
 </script>
 </body>
 </html>
